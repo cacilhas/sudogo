@@ -28,6 +28,10 @@ type board struct {
 	data [81]uint8
 }
 
+func newEmptyBoard() Board {
+	return &board{}
+}
+
 func NewBoard(hardship Hardship) Board {
 	var res board
 	init_value := uint8(1)
@@ -57,18 +61,6 @@ func NewBoard(hardship Hardship) Board {
 	return &res
 }
 
-func checkVec2(x, y int) {
-	if x < 0 || x > 8 || y < 0 || y > 8 {
-		panic("out of range")
-	}
-}
-
-func checkValue(v uint8) {
-	if v > 9 {
-		panic("invalid value")
-	}
-}
-
 func (b *board) Get(x, y int) uint8 {
 	checkVec2(x, y)
 	return b.data[x+y*9]
@@ -76,7 +68,7 @@ func (b *board) Get(x, y int) uint8 {
 
 func (b *board) Set(x, y int, v uint8) {
 	checkVec2(x, y)
-	checkValue(v)
+	checkValue(v, true)
 	b.data[x+y*9] = v
 }
 
