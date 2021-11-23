@@ -4,6 +4,7 @@ type Cell interface {
 	Value() uint8
 	SetValue(value uint8)
 	Clear(uint8)
+	Copy() Cell
 	Get(uint8) bool
 	Set(uint8)
 	Toggle(uint8)
@@ -54,6 +55,14 @@ func (c *cell) Clear(v uint8) {
 	checkValue(v, false)
 	c.guess[v-1] = false
 	c.reset()
+}
+
+func (c cell) Copy() Cell {
+	newCell := cell{value: c.value}
+	for i, v := range c.guess {
+		newCell.guess[i] = v
+	}
+	return &newCell
 }
 
 func (c *cell) Toggle(v uint8) {
