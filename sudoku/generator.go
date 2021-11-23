@@ -28,6 +28,23 @@ type board struct {
 	data [81]uint8
 }
 
+func (hs Hardship) String() string {
+	switch hs {
+	case SOLVED:
+		return "Solved"
+	case EASY:
+		return "Easy"
+	case MEDIUM:
+		return "Medium"
+	case HARD:
+		return "Hard"
+	case FIENDISH:
+		return "Fiendish"
+	default:
+		return "None"
+	}
+}
+
 func newEmptyBoard() Board {
 	return &board{}
 }

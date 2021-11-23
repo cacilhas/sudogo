@@ -10,11 +10,11 @@ PLATFORM= Windows
 TARGET= sudogo.exe
 else
 PLATFORM= $(shell go env GOOS | sed 's/^./\U&/')
-TARGET= sodogo.x86_64
+TARGET= sudogo.x86_64
 endif
 
 BINDIR= $(GOPATH)/bin
-SOURCE= $(wildcard *.go sudoku/*.go)
+SOURCE= $(wildcard *.go sudoku/*.go ui/*.go)
 TESTS= $(wildcard tests/*.go)
 ZIPFILE= Sudogo-$(PLATFORM).zip
 
@@ -46,7 +46,7 @@ $(ZIPFILE): $(PLATFORM) $(PLATFORM)/$(TARGET)
 
 $(PLATFORM)/$(TARGET): $(TARGET) $(PLATFORM)
 	$(INSTALL) $^
-ifdef 
+ifdef
 	$(UPX) $@
 endif
 
