@@ -14,6 +14,7 @@ type Cell interface {
 	Enable(int) bool
 	Disable(int) bool
 	Toggle(int) bool
+	Clone() Cell
 	Copy(Cell)
 	String() string
 	Debug() string
@@ -93,6 +94,10 @@ func (cell *cellType) Toggle(index int) bool {
 	var modifier uint16 = 0x8 << index
 	cell.uint16 ^= modifier
 	return true
+}
+
+func (cell cellType) Clone() Cell {
+	return &cellType{cell.uint16}
 }
 
 func (cell *cellType) Copy(other Cell) {

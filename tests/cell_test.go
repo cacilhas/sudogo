@@ -235,6 +235,23 @@ func TestCell(t *testing.T) {
 			})
 		}
 	})
+	t.Run("Clone", func(t *testing.T) {
+		cell := sudoku.NewCell(3)
+		cell.Disable(5)
+		got := cell.Clone()
+		cell.Set(0)
+		cell.Enable(5)
+		cell.Disable(3)
+		if got.Value() != 3 {
+			t.Fatalf("expected 3, got %s", got)
+		}
+		if got.Candidate(5) {
+			t.Fatalf("should not be a candidate: %s", got.Debug())
+		}
+		if !got.Candidate(3) {
+			t.Fatalf("should be a candidate: %s", got.Debug())
+		}
+	})
 	t.Run("Copy", func(t *testing.T) {
 		cell := sudoku.NewCell(3)
 		cell.Disable(5)
