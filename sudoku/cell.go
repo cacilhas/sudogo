@@ -19,6 +19,8 @@ type Cell interface {
 	String() string
 	Debug() string
 	realValue() uint16
+	setRealValue(uint16)
+	swap(Cell)
 }
 
 type cellType struct {
@@ -123,4 +125,14 @@ func (cell cellType) Debug() string {
 
 func (cell cellType) realValue() uint16 {
 	return cell.uint16
+}
+
+func (cell *cellType) setRealValue(value uint16) {
+	cell.uint16 = value
+}
+
+func (cell *cellType) swap(other Cell) {
+	aux := cell.uint16
+	cell.uint16 = other.realValue()
+	other.setRealValue(aux)
 }
