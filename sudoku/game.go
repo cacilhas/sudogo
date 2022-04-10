@@ -45,7 +45,7 @@ func (game *gameType) Set(x, y, value int) bool {
 	if game.current.Get(x, y).Candidate(value) {
 		game.addRound()
 		game.current.Get(x, y).Set(value)
-		game.current.Fix()
+		game.current.partialFix()
 		return true
 	}
 	return false

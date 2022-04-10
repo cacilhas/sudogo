@@ -1,0 +1,1 @@
+- *Bugfix*: fix candidates being reseted when cell is set.

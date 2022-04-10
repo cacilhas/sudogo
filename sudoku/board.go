@@ -7,6 +7,7 @@ type Board interface {
 	Fix()
 	String() string
 	Clone() Board
+	partialFix()
 }
 
 type boardType struct {
@@ -45,6 +46,10 @@ func (board *boardType) Fix() {
 	for _, cell := range board.cells {
 		cell.Reset()
 	}
+	board.partialFix()
+}
+
+func (board *boardType) partialFix() {
 	for y := 0; y < 9; y++ {
 		fixRange(board.row(y))
 	}
