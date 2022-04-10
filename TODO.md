@@ -1,0 +1,3 @@
+- **Bug**: fix candidates being reseted when cell is set.
+- **Bug**: fix windows size not being restored.
+- **Feature**: add fullscreen.

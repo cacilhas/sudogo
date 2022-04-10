@@ -6,6 +6,7 @@
 [raygui]: https://github.com/raysan5/raygui
 [raylib]: https://www.raylib.com/
 [sudoku]: https://github.com/cacilhas/sudoku/
+[todo]: https://github.com/cacilhas/sudogo/blob/master/TODO.md
 
 # Sudogo
 
@@ -25,6 +26,10 @@ make
 ```
 
 You can also install it from [Itch.io][itch.io].
+
+## TODO
+
+[TODO list][todo]
 
 ## Author
 
