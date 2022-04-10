@@ -45,10 +45,12 @@ func (gameplay *gameplayType) Render() Scene {
 	if width < boardSize {
 		boardSize = width
 	}
+	player.move()
 	xOffset := (width - boardSize) / 2
 	yOffset := (height - boardSize) / 2
 	drawBoard(xOffset, yOffset, boardSize)
 	drawGame(xOffset, yOffset, boardSize/9, gameplay.Game)
+	player.render(xOffset, yOffset, boardSize/9)
 
 	return gameplay
 }
