@@ -30,6 +30,7 @@ itch: $(ZIPFILE)
 
 $(TARGET): $(SOURCE)
 	$(BUILD) -o $@ .
+	strip $@
 
 
 $(BINDIR):
@@ -46,9 +47,6 @@ $(ZIPFILE): $(PLATFORM) $(PLATFORM)/$(TARGET)
 
 $(PLATFORM)/$(TARGET): $(TARGET) $(PLATFORM)
 	$(INSTALL) $^
-ifdef
-	$(UPX) $@
-endif
 
 
 clean:
