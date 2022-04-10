@@ -64,6 +64,8 @@ func (game *gameType) Toggle(x, y, value int) bool {
 		return false
 	}
 	game.addRound()
+	// FIXME: the cell has been toggled correctly, but, after the procedure,
+	// the board keeps the wrong version of the cell.
 	return game.current().Get(x, y).Toggle(value)
 }
 
