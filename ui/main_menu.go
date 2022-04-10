@@ -26,7 +26,7 @@ func (menu *mainMenuType) Render() Scene {
 	height := float32(viper.GetInt("height"))
 
 	titleWidth := height * 0.867
-	buttonWidth := width / 3
+	buttonWidth := width * 0.4
 	bigFontSize := int64(height / 7.5)
 	buttonFontSize := int64(height / 10)
 
@@ -52,8 +52,8 @@ func (menu *mainMenuType) Render() Scene {
 			Width:  buttonWidth,
 			Height: btHeight,
 		},
-		"Very Easy",
-	) {
+		"0. Very Easy",
+	) || raylib.IsKeyPressed(raylib.KeyZero) {
 		return startGameplay(sudoku.EXTREMELY_EASY).Init()
 	}
 
@@ -65,8 +65,8 @@ func (menu *mainMenuType) Render() Scene {
 			Width:  buttonWidth,
 			Height: btHeight,
 		},
-		"Easy",
-	) {
+		"1. Easy",
+	) || raylib.IsKeyPressed(raylib.KeyOne) {
 		return startGameplay(sudoku.EASY).Init()
 	}
 
@@ -78,8 +78,8 @@ func (menu *mainMenuType) Render() Scene {
 			Width:  buttonWidth,
 			Height: btHeight,
 		},
-		"Medium",
-	) {
+		"2. Medium",
+	) || raylib.IsKeyPressed(raylib.KeyTwo) {
 		return startGameplay(sudoku.MEDIUM).Init()
 	}
 
@@ -91,8 +91,8 @@ func (menu *mainMenuType) Render() Scene {
 			Width:  buttonWidth,
 			Height: btHeight,
 		},
-		"Hard",
-	) {
+		"3. Hard",
+	) || raylib.IsKeyPressed(raylib.KeyThree) {
 		return startGameplay(sudoku.HARD).Init()
 	}
 
@@ -104,8 +104,8 @@ func (menu *mainMenuType) Render() Scene {
 			Width:  buttonWidth,
 			Height: btHeight,
 		},
-		"Fiendish",
-	) {
+		"4. Fiendish",
+	) || raylib.IsKeyPressed(raylib.KeyFour) {
 		return startGameplay(sudoku.FIENDISH).Init()
 	}
 
