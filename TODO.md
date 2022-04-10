@@ -1,2 +1,1 @@
-- **Bug**: fix windows size not being restored.
 - **Feature**: add fullscreen.

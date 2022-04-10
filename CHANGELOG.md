@@ -1,1 +1,2 @@
-- *Bugfix*: fix candidates being reseted when cell is set.
+- **Bugfix**: fix candidates being reseted when cell is set.
+- **Bugfix**: fix unread settings at startup.

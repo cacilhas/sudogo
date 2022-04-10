@@ -19,6 +19,11 @@ func init() {
 }
 
 func readSettings() {
+	if err := viper.ReadInConfig(); err != nil {
+		if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
+			panic(err)
+		}
+	}
 	defaultSettings()
 	viper.Set("homepage", "https://cacilhas.itch.io/sudogo")
 	viper.Set("version", "1.nightly")
