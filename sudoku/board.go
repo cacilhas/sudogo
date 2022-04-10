@@ -63,7 +63,6 @@ func (board boardType) Clone() Board {
 	for i := 0; i < 81; i++ {
 		res.cells = append(res.cells, board.cells[i].Clone())
 	}
-	res.Fix()
 	return res
 }
 
