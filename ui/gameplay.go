@@ -5,7 +5,6 @@ import (
 
 	"github.com/cacilhas/sudogo/sudoku"
 	raylib "github.com/gen2brain/raylib-go/raylib"
-	"github.com/spf13/viper"
 )
 
 type gameplayType struct {
@@ -42,8 +41,8 @@ func (gameplay *gameplayType) Render() Scene {
 		return showHelp(gameplay).Init()
 	}
 
-	width := viper.GetInt32("width")
-	height := viper.GetInt32("height")
+	width := int32(windowWidth)
+	height := int32(windowHeight)
 	boardSize := height
 	if width < boardSize {
 		boardSize = width

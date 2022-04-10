@@ -4,7 +4,6 @@ import (
 	"github.com/cacilhas/sudogo/sudoku"
 	raygui "github.com/gen2brain/raylib-go/raygui"
 	raylib "github.com/gen2brain/raylib-go/raylib"
-	"github.com/spf13/viper"
 )
 
 var mainMenu Scene
@@ -26,8 +25,8 @@ func (menu *mainMenuType) Render() Scene {
 		return showHelp(menu).Init()
 	}
 
-	width := float32(viper.GetInt("width"))
-	height := float32(viper.GetInt("height"))
+	width := float32(windowWidth)
+	height := float32(windowHeight)
 
 	titleWidth := height * 0.867
 	buttonWidth := width * 0.4
