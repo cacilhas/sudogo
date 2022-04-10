@@ -21,7 +21,7 @@ func init() {
 func readSettings() {
 	defaultSettings()
 	viper.Set("homepage", "https://cacilhas.itch.io/sudogo")
-	viper.Set("version", "1.0")
+	viper.Set("version", "1.nightly")
 }
 
 func saveSettings() {
