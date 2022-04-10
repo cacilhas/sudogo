@@ -1,6 +1,7 @@
 package ui
 
 import (
+	"github.com/cacilhas/sudogo/sudoku"
 	raygui "github.com/gen2brain/raylib-go/raygui"
 	raylib "github.com/gen2brain/raylib-go/raylib"
 	"github.com/spf13/viper"
@@ -53,7 +54,7 @@ func (menu *mainMenuType) Render() Scene {
 		},
 		"Very Easy",
 	) {
-		return mainMenu // TODO: start easy game
+		return startGameplay(sudoku.EXTREMELY_EASY).Init()
 	}
 
 	btY += float32(buttonFontSize) * 1.25
@@ -66,7 +67,7 @@ func (menu *mainMenuType) Render() Scene {
 		},
 		"Easy",
 	) {
-		return mainMenu // TODO: start easy game
+		return startGameplay(sudoku.EASY).Init()
 	}
 
 	btY += float32(buttonFontSize) * 1.25
@@ -79,7 +80,7 @@ func (menu *mainMenuType) Render() Scene {
 		},
 		"Medium",
 	) {
-		return mainMenu // TODO: start medium game
+		return startGameplay(sudoku.MEDIUM).Init()
 	}
 
 	btY += float32(buttonFontSize) * 1.25
@@ -92,7 +93,7 @@ func (menu *mainMenuType) Render() Scene {
 		},
 		"Hard",
 	) {
-		return mainMenu // TODO: start hard game
+		return startGameplay(sudoku.HARD).Init()
 	}
 
 	btY += float32(buttonFontSize) * 1.25
@@ -105,7 +106,7 @@ func (menu *mainMenuType) Render() Scene {
 		},
 		"Fiendish",
 	) {
-		return mainMenu // TODO: start fiendish game
+		return startGameplay(sudoku.FIENDISH).Init()
 	}
 
 	return menu
