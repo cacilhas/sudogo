@@ -20,12 +20,16 @@ ZIPFILE= Sudogo-$(PLATFORM).zip
 
 
 #-------------------------------------------------------------------------------
-.PHONY: clean install itch mrproper uninstall test
+.PHONY: clean install itch mrproper play test uninstall
 
 all: $(TARGET)
 
 
 itch: $(ZIPFILE)
+
+
+play: $(TARGET)
+	./$<
 
 
 $(TARGET): $(SOURCE)
