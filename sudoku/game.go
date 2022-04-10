@@ -64,8 +64,7 @@ func (game *gameType) Toggle(x, y, value int) bool {
 		return false
 	}
 	game.addRound()
-	game.current().Get(x, y).Toggle(value)
-	return true
+	return game.current().Get(x, y).Toggle(value)
 }
 
 func (game *gameType) Undo() bool {
