@@ -38,6 +38,9 @@ func (gameplay *gameplayType) Render() Scene {
 	if raylib.IsKeyPressed(raylib.KeyEscape) {
 		return mainMenu.Init()
 	}
+	if raylib.IsKeyPressed(raylib.KeyF1) {
+		return showHelp(gameplay).Init()
+	}
 
 	width := viper.GetInt32("width")
 	height := viper.GetInt32("height")

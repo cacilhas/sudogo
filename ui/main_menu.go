@@ -22,6 +22,10 @@ func (menu *mainMenuType) Init() Scene {
 }
 
 func (menu *mainMenuType) Render() Scene {
+	if raylib.IsKeyPressed(raylib.KeyF1) {
+		return showHelp(menu).Init()
+	}
+
 	width := float32(viper.GetInt("width"))
 	height := float32(viper.GetInt("height"))
 
