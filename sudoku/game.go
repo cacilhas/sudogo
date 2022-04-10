@@ -10,8 +10,9 @@ type Game interface {
 }
 
 type gameType struct {
-	rounds []Board
-	index  int
+	current Board
+	undo    []Board
+	redo    []Board
 }
 
 var emptyBoard Board
@@ -27,86 +28,61 @@ func init() {
 }
 
 func NewGame(level Level) Game {
-	rounds := make([]Board, 0, 1)
 	board := NewBoard()
 	Generator.Generate(board, level)
 	return &gameType{
-		rounds: append(rounds, board),
-		index:  0,
+		current: board,
+		undo:    nil,
+		redo:    nil,
 	}
 }
 
 func (game gameType) Get(x, y int) Cell {
-	board := game.current()
-	if board == nil {
-		return nil
-	}
-	return board.Get(x, y)
+	return game.current.Get(x, y)
 }
 
 func (game *gameType) Set(x, y, value int) bool {
-	board := game.current()
-	if board == nil {
-		return false
-	}
-	if board.Get(x, y).Candidate(value) {
+	if game.current.Get(x, y).Candidate(value) {
 		game.addRound()
-		board = game.current()
-		board.Get(x, y).Set(value)
-		board.Fix()
+		game.current.Get(x, y).Set(value)
+		game.current.Fix()
 		return true
 	}
 	return false
 }
 
 func (game *gameType) Toggle(x, y, value int) bool {
-	if game.current() == nil {
-		return false
-	}
 	game.addRound()
 	// FIXME: the cell has been toggled correctly, but, after the procedure,
 	// the board keeps the wrong version of the cell.
-	return game.current().Get(x, y).Toggle(value)
+	return game.current.Get(x, y).Toggle(value)
 }
 
 func (game *gameType) Undo() bool {
-	if game.index <= 0 {
+	if len(game.undo) == 0 {
 		return false
 	}
-	game.index--
+	game.redo = append(game.redo, game.current)
+	game.current = game.undo[len(game.undo)-1]
+	game.undo = game.redo[:len(game.undo)-1]
 	return true
 }
 
 func (game *gameType) Redo() bool {
-	if game.index == len(game.rounds)-1 {
+	if len(game.redo) == 0 {
 		return false
 	}
-	game.index++
+	game.undo = append(game.undo, game.current)
+	game.current = game.redo[len(game.redo)-1]
+	game.redo = game.redo[:len(game.redo)-1]
 	return true
 }
 
 func (game gameType) String() string {
-	board := game.current()
-	if board == nil {
-		return emptyBoard.String()
-	}
-	return board.String()
+	return game.current.String()
 }
 
 func (game *gameType) addRound() {
-	var round Board
-	if game.index < 0 {
-		round = NewBoard()
-	} else {
-		round = game.current().Clone()
-	}
-	game.index++
-	game.rounds = append(game.rounds[:game.index], round)
-}
-
-func (game *gameType) current() Board {
-	if game.index < 0 {
-		return nil
-	}
-	return game.rounds[game.index]
+	game.undo = append(game.undo, game.current)
+	game.current = game.current.Clone()
 }
