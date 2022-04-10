@@ -64,7 +64,7 @@ func (game *gameType) Undo() bool {
 	}
 	game.redo = append(game.redo, game.current)
 	game.current = game.undo[len(game.undo)-1]
-	game.undo = game.redo[:len(game.undo)-1]
+	game.undo = game.undo[:len(game.undo)-1]
 	return true
 }
 
