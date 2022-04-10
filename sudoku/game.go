@@ -1,7 +1,5 @@
 package sudoku
 
-import "fmt"
-
 type Game interface {
 	Get(int, int) Cell
 	Set(int, int, int) bool
@@ -65,10 +63,8 @@ func (game *gameType) Toggle(x, y, value int) bool {
 	if game.current() == nil {
 		return false
 	}
-	fmt.Printf("before: %s\n", game.current().Get(x, y).Debug())
 	game.addRound()
 	game.current().Get(x, y).Toggle(value)
-	fmt.Printf("after: %s\n", game.current().Get(x, y).Debug())
 	return true
 }
 

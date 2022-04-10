@@ -22,7 +22,7 @@ var colours [10]color.RGBA = [10]color.RGBA{
 	raylib.Blue,
 	raylib.Violet,
 	raylib.Pink,
-	raylib.DarkGray,
+	raylib.Gray,
 }
 
 func startGameplay(level sudoku.Level) Scene {
@@ -46,6 +46,7 @@ func (gameplay *gameplayType) Render() Scene {
 		boardSize = width
 	}
 	player.move()
+	play(gameplay.Game)
 	xOffset := (width - boardSize) / 2
 	yOffset := (height - boardSize) / 2
 	drawBoard(xOffset, yOffset, boardSize)
@@ -96,7 +97,7 @@ func drawGame(sx, sy, cellSize int32, game sudoku.Game) {
 				for i := 1; i <= 9; i++ {
 					if cell.Candidate(i) {
 						ix2 := int32(i-1) % 3
-						iy2 := int32(i-1) / 3
+						iy2 := 2 - int32(i-1)/3
 						raylib.DrawCircle(
 							ix+int32(ix2)*smallSize+smallSize/2,
 							iy+int32(iy2)*smallSize+smallSize/2,
@@ -106,6 +107,27 @@ func drawGame(sx, sy, cellSize int32, game sudoku.Game) {
 					}
 				}
 			}
+		}
+	}
+}
+
+func play(game sudoku.Game) {
+	x := int(player.x)
+	y := int(player.y)
+	for i := int32(0); i <= 9; i++ {
+		if raylib.IsKeyPressed(raylib.KeyKp0+i) || raylib.IsKeyPressed(raylib.KeyZero+i) {
+			if raylib.IsKeyDown(raylib.KeyLeftShift) || raylib.IsKeyDown(raylib.KeyRightShift) {
+				game.Set(x, y, int(i))
+			} else {
+				game.Toggle(x, y, int(i))
+			}
+		}
+	}
+	if raylib.IsKeyPressed(raylib.KeyU) {
+		if raylib.IsKeyDown(raylib.KeyLeftShift) || raylib.IsKeyDown(raylib.KeyRightShift) {
+			game.Redo()
+		} else {
+			game.Undo()
 		}
 	}
 }
