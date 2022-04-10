@@ -7,12 +7,17 @@ import (
 	"github.com/spf13/viper"
 )
 
+var windowWidth int
+var windowHeight int
+
 func Mainloop() {
+	windowWidth = raylib.GetScreenWidth()
+	windowHeight = raylib.GetScreenHeight()
 	scene := mainMenu.Init()
 
 	for !raylib.WindowShouldClose() {
 		fullscreen := raylib.IsWindowFullscreen()
-		shouldBeFullscreen := viper.GetBool("fullscreen")
+		shouldBeFullscreen := getFullscreen()
 
 		if shouldBeFullscreen && !fullscreen {
 			raylib.ToggleFullscreen()
@@ -20,11 +25,14 @@ func Mainloop() {
 			raylib.ToggleFullscreen()
 		}
 		fullscreen = shouldBeFullscreen
-		viper.Set("fullscreen", fullscreen)
 
-		if raylib.IsWindowResized() && !fullscreen {
-			viper.Set("width", raylib.GetScreenWidth())
-			viper.Set("height", raylib.GetScreenHeight())
+		if raylib.IsWindowResized() {
+			windowWidth = raylib.GetScreenWidth()
+			windowHeight = raylib.GetScreenHeight()
+			if !fullscreen {
+				viper.Set("width", windowWidth)
+				viper.Set("height", windowHeight)
+			}
 		}
 
 		raylib.BeginDrawing()
@@ -35,4 +43,14 @@ func Mainloop() {
 		raylib.EndDrawing()
 		time.Sleep(time.Millisecond * 42)
 	}
+}
+
+func getFullscreen() bool {
+	fullscreen := viper.GetBool("fullscreen")
+	control := raylib.IsKeyDown(raylib.KeyLeftControl) || raylib.IsKeyDown(raylib.KeyRightControl)
+	if raylib.IsKeyPressed(raylib.KeyF) && control {
+		fullscreen = !fullscreen
+		viper.Set("fullscreen", fullscreen)
+	}
+	return fullscreen
 }

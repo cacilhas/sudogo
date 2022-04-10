@@ -3,16 +3,16 @@ package ui
 import (
 	raygui "github.com/gen2brain/raylib-go/raygui"
 	raylib "github.com/gen2brain/raylib-go/raylib"
-	"github.com/spf13/viper"
 )
 
 var helpMessage string = `HELP
 
 F1 :: Show this help
-Arrow keys / WASD / HJKL :: move
+Control + F :: Toggle fullscreen
+Arrow keys / WASD / HJKL :: Move
 ESC :: Back to main menu / Exit
-Numeric keys :: toggle candidates
-Numeric keys + Shift :: set cell value`
+Numeric keys :: Toggle candidates
+Shift + Numeric keys :: Set cell value`
 
 type helpType struct {
 	previous Scene
@@ -32,8 +32,8 @@ func (help *helpType) Render() Scene {
 		return help.previous.Init()
 	}
 
-	width := float32(viper.GetInt("width"))
-	height := float32(viper.GetInt("height"))
+	width := float32(windowWidth)
+	height := float32(windowHeight)
 
 	titleWidth := height * 0.867
 	textWidth := width * 0.8
