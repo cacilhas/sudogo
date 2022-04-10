@@ -4,6 +4,7 @@ import (
 	"math/rand"
 	"time"
 
+	"github.com/cacilhas/sudogo/ui"
 	raylib "github.com/gen2brain/raylib-go/raylib"
 	"github.com/spf13/viper"
 )
@@ -26,5 +27,6 @@ func main() {
 	raylib.SetWindowState(raylib.FlagWindowResizable)
 	raylib.SetTargetFPS(24)
 
+	ui.Mainloop()
 	raylib.CloseWindow()
 }
