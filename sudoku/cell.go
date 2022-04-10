@@ -15,7 +15,6 @@ type Cell interface {
 	Disable(int) bool
 	Toggle(int) bool
 	Clone() Cell
-	Copy(Cell)
 	String() string
 	Debug() string
 	realValue() uint16
@@ -100,10 +99,6 @@ func (cell *cellType) Toggle(index int) bool {
 
 func (cell cellType) Clone() Cell {
 	return &cellType{cell.uint16}
-}
-
-func (cell *cellType) Copy(other Cell) {
-	cell.uint16 = other.realValue()
 }
 
 func (cell cellType) String() string {

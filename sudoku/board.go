@@ -6,6 +6,7 @@ type Board interface {
 	Get(int, int) Cell
 	Fix()
 	String() string
+	Clone() Board
 }
 
 type boardType struct {
@@ -25,8 +26,7 @@ var boardReference [81]int = [81]int{
 }
 
 func NewBoard() Board {
-	board := &boardType{}
-	board.cells = make([]Cell, 0, 81)
+	board := &boardType{cells: make([]Cell, 0, 81)}
 	for _, i := range boardReference {
 		board.cells = append(board.cells, NewCell(i))
 	}
@@ -56,6 +56,15 @@ func (board *boardType) Fix() {
 			fixRange(board.block(x, y))
 		}
 	}
+}
+
+func (board boardType) Clone() Board {
+	res := &boardType{cells: make([]Cell, 0, 81)}
+	for i := 0; i < 81; i++ {
+		res.cells = append(res.cells, board.cells[i].Clone())
+	}
+	res.Fix()
+	return res
 }
 
 func (board boardType) String() string {
