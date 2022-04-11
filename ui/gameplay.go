@@ -53,6 +53,10 @@ func (gameplay *gameplayType) Render() Scene {
 	yOffset := (height - boardSize) / 2
 	drawBoard(xOffset, yOffset, boardSize)
 	drawGame(xOffset, yOffset, boardSize/9, gameplay.Game)
+
+	if !raylib.IsCursorHidden() && raylib.IsMouseButtonPressed(raylib.MouseLeftButton) {
+		cellClicked(xOffset, yOffset, boardSize/9)
+	}
 	player.render(xOffset, yOffset, boardSize/9)
 
 	return gameplay
@@ -110,6 +114,15 @@ func drawGame(sx, sy, cellSize int32, game sudoku.Game) {
 				}
 			}
 		}
+	}
+}
+
+func cellClicked(x, y, cellSize int32) {
+	cellX := (int32(mouseLastPosition.X) - x) / cellSize
+	cellY := (int32(mouseLastPosition.Y) - y) / cellSize
+	if cellX >= 0 && cellX < 9 && cellY >= 0 && cellY < 9 {
+		player.x = cellX
+		player.y = cellY
 	}
 }
 
