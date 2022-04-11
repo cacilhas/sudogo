@@ -101,5 +101,16 @@ func TestBoard(t *testing.T) {
 				t.Fatal("expected error, got nil")
 			}
 		})
+		t.Run("board can reload itself", func(t *testing.T) {
+			board := sudoku.NewBoard()
+			input := board.String()
+			newBoard, err := sudoku.LoadBoard(input)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if got := newBoard.String(); got != input {
+				t.Fatalf("expected:\n%s\ngot:\n%s", input, got)
+			}
+		})
 	})
 }
