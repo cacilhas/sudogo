@@ -1,6 +1,7 @@
 # CHANGELOG
 
 - 🎯 **Bug**: fix extra lines on the board.
+- Topic: hide mouse pointer.
 
 - Release 1.1, Sun Apr 10 19:59:19 2022 UTC
   - 🎯 **Bugfix**: fix candidates being reseted when cell is set.
