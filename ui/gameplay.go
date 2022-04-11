@@ -2,6 +2,7 @@ package ui
 
 import (
 	"image/color"
+	"os"
 
 	"github.com/cacilhas/sudogo/sudoku"
 	raylib "github.com/gen2brain/raylib-go/raylib"
@@ -27,7 +28,18 @@ var colours [10]color.RGBA = [10]color.RGBA{
 func startGameplay(level sudoku.Level) Scene {
 	player.x = 4
 	player.y = 4
-	return &gameplayType{sudoku.NewGame(level)}
+	game, _ := sudoku.NewGame(level)
+	return &gameplayType{game}
+}
+
+func loadGameplay(input string) (Scene, error) {
+	player.x = 4
+	player.y = 4
+	if game, err := sudoku.NewGame(input); err == nil {
+		return &gameplayType{game}, nil
+	} else {
+		return nil, err
+	}
 }
 
 func (gameplay *gameplayType) Init() Scene {
@@ -129,11 +141,17 @@ func cellClicked(x, y, cellSize int32) {
 }
 
 func play(game sudoku.Game) {
+	control := raylib.IsKeyDown(raylib.KeyLeftControl) || raylib.IsKeyDown(raylib.KeyRightControl)
+	shift := raylib.IsKeyDown(raylib.KeyLeftShift) || raylib.IsKeyDown(raylib.KeyRightShift)
+	if raylib.IsKeyPressed(raylib.KeyS) && control {
+		saveCurrentBoard(game.String())
+	}
+
 	x := int(player.x)
 	y := int(player.y)
 	for i := int32(0); i <= 9; i++ {
 		if raylib.IsKeyPressed(raylib.KeyKp0+i) || raylib.IsKeyPressed(raylib.KeyZero+i) {
-			if raylib.IsKeyDown(raylib.KeyLeftShift) || raylib.IsKeyDown(raylib.KeyRightShift) {
+			if shift {
 				game.Set(x, y, int(i))
 			} else {
 				game.Toggle(x, y, int(i))
@@ -141,10 +159,31 @@ func play(game sudoku.Game) {
 		}
 	}
 	if raylib.IsKeyPressed(raylib.KeyU) {
-		if raylib.IsKeyDown(raylib.KeyLeftShift) || raylib.IsKeyDown(raylib.KeyRightShift) {
+		if shift {
 			game.Redo()
 		} else {
 			game.Undo()
 		}
 	}
+}
+
+func saveCurrentBoard(data string) {
+	var fp *os.File
+	if aux, err := saveFile(); err == nil {
+		fp = aux
+	} else {
+		showError(err)
+		return
+	}
+	defer func() {
+		filename := fp.Name()
+		fp.Close()
+		if _, err := os.Stat(filename); err == nil {
+			os.Chmod(filename, 0644)
+			showInfo("Board saved to %s", filename)
+		} else {
+			showError(err)
+		}
+	}()
+	fp.WriteString(data)
 }

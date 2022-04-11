@@ -6,9 +6,11 @@ require (
 	github.com/gen2brain/raylib-go/raygui v0.0.0-20220324192015-efabb001d2f1
 	github.com/gen2brain/raylib-go/raylib v0.0.0-20220324192015-efabb001d2f1
 	github.com/spf13/viper v1.10.1
+	github.com/sqweek/dialog v0.0.0-20220227145630-7a1c9e333fcf
 )
 
 require (
+	github.com/TheTitanrain/w32 v0.0.0-20180517000239-4f5cfb03fabf // indirect
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/magiconair/properties v1.8.5 // indirect

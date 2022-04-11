@@ -27,17 +27,19 @@ func init() {
 	}
 
 	player.move = func() {
-		if raylib.IsKeyPressed(raylib.KeyLeft) || raylib.IsKeyPressed(raylib.KeyA) || raylib.IsKeyPressed(raylib.KeyH) {
-			player.goLeft()
-		}
-		if raylib.IsKeyPressed(raylib.KeyRight) || raylib.IsKeyPressed(raylib.KeyD) || raylib.IsKeyPressed(raylib.KeyL) {
-			player.goRight()
-		}
-		if raylib.IsKeyPressed(raylib.KeyUp) || raylib.IsKeyPressed(raylib.KeyW) || raylib.IsKeyPressed(raylib.KeyK) {
-			player.goUp()
-		}
-		if raylib.IsKeyPressed(raylib.KeyDown) || raylib.IsKeyPressed(raylib.KeyS) || raylib.IsKeyPressed(raylib.KeyJ) {
-			player.goDown()
+		if !(raylib.IsKeyDown(raylib.KeyLeftControl) || raylib.IsKeyDown(raylib.KeyRightControl)) {
+			if raylib.IsKeyPressed(raylib.KeyLeft) || raylib.IsKeyPressed(raylib.KeyA) || raylib.IsKeyPressed(raylib.KeyH) {
+				player.goLeft()
+			}
+			if raylib.IsKeyPressed(raylib.KeyRight) || raylib.IsKeyPressed(raylib.KeyD) || raylib.IsKeyPressed(raylib.KeyL) {
+				player.goRight()
+			}
+			if raylib.IsKeyPressed(raylib.KeyUp) || raylib.IsKeyPressed(raylib.KeyW) || raylib.IsKeyPressed(raylib.KeyK) {
+				player.goUp()
+			}
+			if raylib.IsKeyPressed(raylib.KeyDown) || raylib.IsKeyPressed(raylib.KeyS) || raylib.IsKeyPressed(raylib.KeyJ) {
+				player.goDown()
+			}
 		}
 	}
 

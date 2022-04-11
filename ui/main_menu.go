@@ -1,6 +1,8 @@
 package ui
 
 import (
+	"os"
+
 	"github.com/cacilhas/sudogo/sudoku"
 	raygui "github.com/gen2brain/raylib-go/raygui"
 	raylib "github.com/gen2brain/raylib-go/raylib"
@@ -29,7 +31,7 @@ func (menu *mainMenuType) Render() Scene {
 	height := float32(windowHeight)
 
 	titleWidth := height * 0.867
-	buttonWidth := width * 0.4
+	buttonWidth := width * 0.6
 	bigFontSize := int64(height / 7.5)
 	buttonFontSize := int64(height / 10)
 
@@ -112,5 +114,40 @@ func (menu *mainMenuType) Render() Scene {
 		return startGameplay(sudoku.FIENDISH).Init()
 	}
 
+	btY += float32(buttonFontSize) * 1.25
+	if raygui.Button(
+		raylib.Rectangle{
+			X:      btX,
+			Y:      btY,
+			Width:  buttonWidth,
+			Height: btHeight,
+		},
+		"L. Load from File",
+	) || raylib.IsKeyPressed(raylib.KeyL) {
+		return loadFromFile(menu)
+	}
+
 	return menu
+}
+
+func loadFromFile(scene Scene) Scene {
+	var fp *os.File
+	if aux, err := openFile(); err == nil {
+		fp = aux
+	} else {
+		showError(err)
+		return scene
+	}
+	defer fp.Close()
+	var data [4096]byte
+	if _, err := fp.Read(data[:]); err != nil {
+		showError(err)
+		return scene
+	}
+	if nextScene, err := loadGameplay(string(data[:])); err == nil {
+		return nextScene
+	} else {
+		showError(err)
+	}
+	return scene
 }
