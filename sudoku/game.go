@@ -38,6 +38,7 @@ func NewGame(input interface{}) (Game, error) {
 		if board, err = LoadBoard(value); err != nil {
 			return nil, err
 		}
+		board.Fix()
 	}
 	return &gameType{
 		current: board,
