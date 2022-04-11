@@ -74,7 +74,7 @@ func drawBoard(x, y, size int32) {
 	raylib.DrawRectangle(x+2*blockSize, y+2*blockSize, blockSize, blockSize, clr1)
 
 	for lx := x; lx <= x+cell*9; lx += cell {
-		raylib.DrawLine(lx, y, lx, y+cell*10, raylib.Black)
+		raylib.DrawLine(lx, y, lx, y+cell*9, raylib.Black)
 	}
 	for ly := y; ly <= y+cell*10; ly += cell {
 		raylib.DrawLine(x, ly, x+cell*9, ly, raylib.Black)
