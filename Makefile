@@ -13,10 +13,11 @@ PLATFORM= $(shell go env GOOS | sed 's/^./\U&/')
 TARGET= sudogo.x86_64
 endif
 
+VERSION= $(shell ./version.sh)
 BINDIR= $(GOPATH)/bin
 SOURCE= $(wildcard *.go sudoku/*.go ui/*.go)
 TESTS= $(wildcard tests/*.go)
-ZIPFILE= Sudogo-$(PLATFORM).zip
+ZIPFILE= Sudogo-$(VERSION)-$(PLATFORM).zip
 
 
 #-------------------------------------------------------------------------------
