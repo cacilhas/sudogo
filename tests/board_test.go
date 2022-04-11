@@ -55,4 +55,51 @@ func TestBoard(t *testing.T) {
 			}
 		}
 	})
+	t.Run("Load", func(t *testing.T) {
+		t.Run("right input", func(t *testing.T) {
+			input := `+---+---+---+
+|8..|...|..4|
+|.5.|...|.82|
+|...|.7.|.93|
++---+---+---+
+|...|...|825|
+|...|.9.|6..|
+|46.|58.|..1|
++---+---+---+
+|5..|.3.|4.8|
+|1..|..7|.59|
+|7.8|925|...|
++---+---+---+
+`
+			board, err := sudoku.LoadBoard(input)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if got := board.String(); got != input {
+				t.Fatalf("expected:\n%s\ngot:\n%s", input, got)
+			}
+		})
+		t.Run("too small input", func(t *testing.T) {
+			board, err := sudoku.LoadBoard("1234")
+			if board != nil {
+				t.Fatalf("expected nil, got:\n%s", board)
+			}
+			if err == nil {
+				t.Fatal("expected error, got nil")
+			}
+		})
+		t.Run("too long input", func(t *testing.T) {
+			input := ""
+			for i := 0; i < 100; i++ {
+				input += "0"
+			}
+			board, err := sudoku.LoadBoard(input)
+			if board != nil {
+				t.Fatalf("expected nil, got:\n%s", board)
+			}
+			if err == nil {
+				t.Fatal("expected error, got nil")
+			}
+		})
+	})
 }

@@ -1,6 +1,9 @@
 package sudoku
 
-import "bytes"
+import (
+	"bytes"
+	"fmt"
+)
 
 type Board interface {
 	Get(int, int) Cell
@@ -33,6 +36,21 @@ func NewBoard() Board {
 	}
 	board.Fix()
 	return board
+}
+
+func LoadBoard(s string) (Board, error) {
+	board := &boardType{cells: make([]Cell, 0, 81)}
+	for _, c := range s {
+		if c == '.' {
+			board.cells = append(board.cells, NewCell(0))
+		} else if c >= '0' && c <= '9' {
+			board.cells = append(board.cells, NewCell(int(c-'0')))
+		}
+	}
+	if len(board.cells) == 81 {
+		return board, nil
+	}
+	return nil, fmt.Errorf("wrong board size, expected 81, got %d", len(board.cells))
 }
 
 func (board *boardType) Get(x, y int) Cell {
