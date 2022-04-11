@@ -1,3 +1,3 @@
 # TODO list
 
-🏝️ No known issue for now.
+- 🏗️ **Feature**: compile for Windows and macOS.
