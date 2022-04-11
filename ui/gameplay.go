@@ -25,6 +25,8 @@ var colours [10]color.RGBA = [10]color.RGBA{
 }
 
 func startGameplay(level sudoku.Level) Scene {
+	player.x = 4
+	player.y = 4
 	return &gameplayType{sudoku.NewGame(level)}
 }
 
