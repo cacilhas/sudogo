@@ -27,14 +27,23 @@ func init() {
 	emptyBoard.Fix()
 }
 
-func NewGame(level Level) Game {
-	board := NewBoard()
-	Generator.Generate(board, level)
+func NewGame(input interface{}) (Game, error) {
+	var board Board
+	switch value := input.(type) {
+	case Level:
+		board = NewBoard()
+		Generator.Generate(board, value)
+	case string:
+		var err error
+		if board, err = LoadBoard(value); err != nil {
+			return nil, err
+		}
+	}
 	return &gameType{
 		current: board,
 		undo:    nil,
 		redo:    nil,
-	}
+	}, nil
 }
 
 func (game gameType) Get(x, y int) Cell {

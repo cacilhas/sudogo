@@ -1,9 +1,15 @@
 package ui
 
 import (
+	"fmt"
+	"os"
+	"path"
+
 	"github.com/cacilhas/sudogo/sudoku"
 	raygui "github.com/gen2brain/raylib-go/raygui"
 	raylib "github.com/gen2brain/raylib-go/raylib"
+	"github.com/spf13/viper"
+	"github.com/sqweek/dialog"
 )
 
 var mainMenu Scene
@@ -29,7 +35,7 @@ func (menu *mainMenuType) Render() Scene {
 	height := float32(windowHeight)
 
 	titleWidth := height * 0.867
-	buttonWidth := width * 0.4
+	buttonWidth := width * 0.6
 	bigFontSize := int64(height / 7.5)
 	buttonFontSize := int64(height / 10)
 
@@ -112,5 +118,51 @@ func (menu *mainMenuType) Render() Scene {
 		return startGameplay(sudoku.FIENDISH).Init()
 	}
 
+	btY += float32(buttonFontSize) * 1.25
+	if raygui.Button(
+		raylib.Rectangle{
+			X:      btX,
+			Y:      btY,
+			Width:  buttonWidth,
+			Height: btHeight,
+		},
+		"L. Load from File",
+	) || raylib.IsKeyPressed(raylib.KeyL) {
+		return loadFromFile(menu)
+	}
+
 	return menu
+}
+
+func loadFromFile(scene Scene) Scene {
+	var filename string
+	fileBuilder := dialog.File().SetStartDir(viper.GetString("save_dir"))
+	fileBuilder.Title("Load Board from File")
+	if aux, err := fileBuilder.Load(); err == nil {
+		filename = aux
+		viper.Set("save_dir", path.Dir(filename))
+	} else {
+		fmt.Print(err)
+		return scene
+	}
+
+	var fp *os.File
+	if aux, err := os.Open(filename); err == nil {
+		fp = aux
+	} else {
+		fmt.Print(err)
+		return scene
+	}
+	defer fp.Close()
+	var data [4096]byte
+	if _, err := fp.Read(data[:]); err != nil {
+		fmt.Print(err)
+		return scene
+	}
+	if nextScene, err := loadGameplay(string(data[:])); err == nil {
+		return nextScene
+	} else {
+		fmt.Print(err)
+	}
+	return scene
 }
