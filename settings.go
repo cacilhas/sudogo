@@ -8,12 +8,19 @@ import (
 	"github.com/spf13/viper"
 )
 
+var homedir string
+
 func init() {
+	var err error
+	if homedir, err = os.UserHomeDir(); err != nil {
+		homedir = os.Getenv("HOME")
+	}
+
 	viper.SetConfigName("sudogo")
 	viper.SetConfigType("yaml")
 	config := os.Getenv("XDG_CONFIG_HOME")
 	if config == "" {
-		config = path.Join(os.Getenv("HOME"), ".config")
+		config = path.Join(homedir, ".config")
 	}
 	viper.AddConfigPath(config)
 }
@@ -47,5 +54,8 @@ func defaultSettings() {
 	}
 	if !viper.IsSet("fullscreen") {
 		viper.Set("fullscreen", false)
+	}
+	if !viper.IsSet("save_dir") {
+		viper.Set("save_dir", homedir)
 	}
 }
