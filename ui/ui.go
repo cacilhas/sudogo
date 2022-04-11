@@ -9,13 +9,22 @@ import (
 
 var windowWidth int
 var windowHeight int
+var mouseStop time.Duration
+var hideMouse time.Duration = time.Duration(1_500_000_000)
+var mouseLastPosition raylib.Vector2
 
 func Mainloop() {
 	windowWidth = raylib.GetScreenWidth()
 	windowHeight = raylib.GetScreenHeight()
 	scene := mainMenu.Init()
+	lastTick := time.Now()
+	mouseStop = time.Duration(0)
+	mouseLastPosition = raylib.GetMousePosition()
 
 	for !raylib.WindowShouldClose() {
+		tick := time.Now()
+		dealWithPointer(tick.Sub(lastTick))
+		lastTick = tick
 		fullscreen := raylib.IsWindowFullscreen()
 		shouldBeFullscreen := getFullscreen()
 
@@ -53,4 +62,23 @@ func getFullscreen() bool {
 		viper.Set("fullscreen", fullscreen)
 	}
 	return fullscreen
+}
+
+func dealWithPointer(dt time.Duration) {
+	if raylib.IsMouseButtonPressed(raylib.MouseLeftButton) {
+		raylib.ShowCursor()
+		mouseStop = time.Duration(0)
+		return
+	}
+	position := raylib.GetMousePosition()
+	if position.X != mouseLastPosition.X || position.Y != mouseLastPosition.Y {
+		raylib.ShowCursor()
+		mouseLastPosition = position
+		mouseStop = time.Duration(0)
+		return
+	}
+	mouseStop += dt
+	if mouseStop >= hideMouse {
+		raylib.HideCursor()
+	}
 }
