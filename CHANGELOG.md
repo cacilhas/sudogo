@@ -4,6 +4,7 @@
 - Topic: hide mouse pointer.
 - 🏯 **Feature**: mouse click.
 - Topic: move player back to the center on new game.
+- 🏯 **Feature**: save and load.
 
 - Release 1.1, Sun Apr 10 19:59:19 2022 UTC
   - 🎯 **Bugfix**: fix candidates being reseted when cell is set.
