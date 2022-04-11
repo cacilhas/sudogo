@@ -1,4 +1,5 @@
 [bsd-3-clause]: https://opensource.org/licenses/BSD-3-Clause
+[changelog]: https://github.com/cacilhas/sudogo/blob/master/CHANGELOG.md
 [copying]: https://raw.githubusercontent.com/cacilhas/sudogo/master/COPYING
 [email]: mailto:batalema@cacilhas.info
 [golang]: https://go.dev/
@@ -27,9 +28,10 @@ make
 
 You can also install it from [Itch.io][itch.io].
 
-## TODO
+## Info
 
-[TODO list][todo]
+- [CHANGELOG][changelog]
+- [TODO list][todo]
 
 ## Author
 
