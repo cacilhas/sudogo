@@ -1,6 +1,7 @@
 package sudoku
 
 type Game interface {
+	Autofill()
 	Get(int, int) Cell
 	Set(int, int, int) bool
 	Toggle(int, int, int) bool
@@ -45,6 +46,30 @@ func NewGame(input interface{}) (Game, error) {
 		undo:    nil,
 		redo:    nil,
 	}, nil
+}
+
+func (game *gameType) Autofill() {
+	found := false
+	for y := 0; y < 9; y++ {
+		for x := 0; x < 9; x++ {
+			cell := game.Get(x, y)
+			if cell.Candidates() == 1 {
+				if !found {
+					found = true
+					game.addRound()
+				}
+				for i := 1; i <= 9; i++ {
+					if cell.Candidate(i) {
+						cell.Set(i)
+						break
+					}
+				}
+			}
+		}
+	}
+	if found {
+		game.current.Fix()
+	}
 }
 
 func (game gameType) Get(x, y int) Cell {

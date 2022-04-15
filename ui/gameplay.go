@@ -147,6 +147,10 @@ func play(game sudoku.Game) {
 		saveCurrentBoard(game.String())
 	}
 
+	if raylib.IsKeyPressed(raylib.KeySpace) {
+		game.Autofill()
+	}
+
 	x := int(player.x)
 	y := int(player.y)
 	for i := int32(0); i <= 9; i++ {

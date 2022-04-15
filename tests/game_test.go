@@ -10,7 +10,7 @@ import (
 func TestGame(t *testing.T) {
 	t.Run("NewGame", func(t *testing.T) {
 		rand.Seed(-1)
-		game := sudoku.NewGame(sudoku.EASY)
+		game, _ := sudoku.NewGame(sudoku.EASY)
 		expected := `+---+---+---+
 |8..|35.|164|
 |95.|416|.82|
@@ -33,7 +33,7 @@ func TestGame(t *testing.T) {
 	t.Run("Set", func(t *testing.T) {
 		t.Run("valid move", func(t *testing.T) {
 			rand.Seed(-1)
-			game := sudoku.NewGame(sudoku.EASY)
+			game, _ := sudoku.NewGame(sudoku.EASY)
 			control := game.String()
 			if !game.Get(1, 3).Candidate(3) {
 				t.Fatal("expected 3 to be a candidate")
@@ -53,7 +53,7 @@ func TestGame(t *testing.T) {
 		})
 		t.Run("invalid move", func(t *testing.T) {
 			rand.Seed(-1)
-			game := sudoku.NewGame(sudoku.EASY)
+			game, _ := sudoku.NewGame(sudoku.EASY)
 			control := game.String()
 			if game.Set(0, 3, 1) {
 				t.Fatal("expected Set to fail")
@@ -67,7 +67,7 @@ func TestGame(t *testing.T) {
 	t.Run("Undo", func(t *testing.T) {
 		t.Run("no undo/redo", func(t *testing.T) {
 			rand.Seed(-1)
-			game := sudoku.NewGame(sudoku.EASY)
+			game, _ := sudoku.NewGame(sudoku.EASY)
 			control := game.String()
 			if game.Undo() {
 				t.Fatal("expected Undo to fail")
@@ -84,7 +84,7 @@ func TestGame(t *testing.T) {
 		})
 		t.Run("undo/redo", func(t *testing.T) {
 			rand.Seed(-1)
-			game := sudoku.NewGame(sudoku.EASY)
+			game, _ := sudoku.NewGame(sudoku.EASY)
 			control := game.String()
 			game.Set(0, 3, 3)
 			if got := game.String(); got == control {
@@ -108,7 +108,7 @@ func TestGame(t *testing.T) {
 	t.Run("Toggle", func(t *testing.T) {
 		t.Run("disable", func(t *testing.T) {
 			rand.Seed(-1)
-			game := sudoku.NewGame(sudoku.EASY)
+			game, _ := sudoku.NewGame(sudoku.EASY)
 			if !game.Get(0, 3).Candidate(3) {
 				t.Fatalf("expected 3 to be a candidate: %s", game.Get(1, 3).Debug())
 			}
@@ -127,7 +127,7 @@ func TestGame(t *testing.T) {
 		})
 		t.Run("enable", func(t *testing.T) {
 			rand.Seed(-1)
-			game := sudoku.NewGame(sudoku.EASY)
+			game, _ := sudoku.NewGame(sudoku.EASY)
 			if game.Get(0, 3).Candidate(4) {
 				t.Fatalf("expected 4 not to be a candidate: %s", game.Get(1, 3).Debug())
 			}
