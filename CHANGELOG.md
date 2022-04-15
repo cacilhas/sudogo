@@ -1,7 +1,9 @@
 # CHANGELOG
 
+- 🎯 **Bugfix**: fix board vertical alignment.
+
 - Release 1.2, Mon Apr 11 18:00:43 2022 UTC
-  - 🎯 **Bug**: fix extra lines on the board.
+  - 🎯 **Bugfix**: fix extra lines on the board.
   - Topic: hide mouse pointer.
   - 🏯 **Feature**: mouse click.
   - Topic: move player back to the center on new game.
