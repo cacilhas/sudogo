@@ -1,6 +1,7 @@
 package sudoku
 
 type Game interface {
+	GameOver() bool
 	Get(int, int) Cell
 	Set(int, int, int) bool
 	Toggle(int, int, int) bool
@@ -45,6 +46,10 @@ func NewGame(input interface{}) (Game, error) {
 		undo:    nil,
 		redo:    nil,
 	}, nil
+}
+
+func (game gameType) GameOver() bool {
+	return game.current.GameOver()
 }
 
 func (game gameType) Get(x, y int) Cell {
