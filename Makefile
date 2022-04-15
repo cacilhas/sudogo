@@ -17,12 +17,12 @@ else
 CC = i686-w64-mingw32-gcc
 CXX= i686-w64-mingw32-gcc++
 endif
-CGO_ENABLED= 1
 else
 TARGET= sudogo.x86_64
 endif
 
-BUILD= CC=$(CC) CXX=$(CXX) go build
+BUILD= CGO_ENABLED=1 CC=$(CC) CXX=$(CXX) go build
+
 
 VERSION= $(shell ./version.sh)
 BINDIR= $(GOPATH)/bin
