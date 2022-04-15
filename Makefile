@@ -6,12 +6,7 @@ ZIP     = zip -r
 CC     ?= clang
 CXX    ?= clang++
 
-ifeq ($(UNAME), Windows_NT)
-PLATFORM= Windows
-else
 PLATFORM= $(shell go env GOOS | sed 's/^./\U&/')
-endif
-
 
 ifeq ($(PLATFORM), Windows)
 TARGET= sudogo.exe
