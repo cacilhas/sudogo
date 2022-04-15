@@ -36,8 +36,9 @@ func Mainloop() {
 		fullscreen = shouldBeFullscreen
 
 		if raylib.IsWindowResized() {
-			windowWidth = raylib.GetScreenWidth()
-			windowHeight = raylib.GetScreenHeight()
+			currentMonitor := raylib.GetCurrentMonitor()
+			windowWidth = raylib.GetMonitorWidth(currentMonitor)
+			windowHeight = raylib.GetMonitorHeight(currentMonitor)
 			if !fullscreen {
 				viper.Set("width", windowWidth)
 				viper.Set("height", windowHeight)
