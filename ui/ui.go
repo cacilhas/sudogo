@@ -10,7 +10,7 @@ import (
 var windowWidth int
 var windowHeight int
 var mouseStop time.Duration
-var hideMouse time.Duration = time.Duration(1_500_000_000)
+var hideMouse time.Duration = 1_500 * time.Millisecond
 var mouseLastPosition raylib.Vector2
 
 func Mainloop() {
