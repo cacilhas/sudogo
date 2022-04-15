@@ -7,6 +7,7 @@ import (
 
 type Board interface {
 	Get(int, int) Cell
+	GameOver() bool
 	Fix()
 	String() string
 	Clone() Board
@@ -36,6 +37,15 @@ func NewBoard() Board {
 	}
 	board.Fix()
 	return board
+}
+
+func (board boardType) GameOver() bool {
+	for _, cell := range board.cells {
+		if !cell.IsSet() {
+			return false
+		}
+	}
+	return true
 }
 
 func LoadBoard(s string) (Board, error) {
