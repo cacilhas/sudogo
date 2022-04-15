@@ -57,9 +57,9 @@ func (gameplay *gameplayType) Render() Scene {
 
 	width := int32(windowWidth)
 	height := int32(windowHeight)
-	boardSize := height
+	boardSize := int32(height/9) * 9
 	if width < boardSize {
-		boardSize = width
+		boardSize = int32(width/9) * 9
 	}
 	player.move()
 	play(gameplay.Game)
