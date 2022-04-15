@@ -27,6 +27,43 @@ func TestCell(t *testing.T) {
 			}
 		})
 	})
+	t.Run("Candidates", func(t *testing.T) {
+		t.Run("virgin cell", func(t *testing.T) {
+			cell := sudoku.NewCell(0)
+			if got := cell.Candidates(); got != 9 {
+				t.Fatalf("expected 9, got %d", got)
+			}
+		})
+		t.Run("no candidates", func(t *testing.T) {
+			cell := sudoku.NewCell(0)
+			for i := 1; i <= 9; i++ {
+				cell.Disable(i)
+			}
+			if got := cell.Candidates(); got != 0 {
+				t.Fatalf("expected 0, got %d", got)
+			}
+		})
+		t.Run("one candidate", func(t *testing.T) {
+			cell := sudoku.NewCell(0)
+			for i := 1; i <= 9; i++ {
+				if i != 5 {
+					cell.Disable(i)
+				}
+			}
+			if got := cell.Candidates(); got != 1 {
+				t.Fatalf("expected 1, got %d", got)
+			}
+		})
+		t.Run("3 candidates", func(t *testing.T) {
+			cell := sudoku.NewCell(0)
+			for i := 3; i <= 8; i++ {
+				cell.Disable(i)
+			}
+			if got := cell.Candidates(); got != 3 {
+				t.Fatalf("expected 3, got %d", got)
+			}
+		})
+	})
 	t.Run("Set", func(t *testing.T) {
 		t.Run("0", func(t *testing.T) {
 			cell := sudoku.NewCell(2)

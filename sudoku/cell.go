@@ -11,6 +11,7 @@ type Cell interface {
 	Set(int) bool
 	Reset()
 	Candidate(int) bool
+	Candidates() int
 	Enable(int) bool
 	Disable(int) bool
 	Toggle(int) bool
@@ -65,6 +66,17 @@ func (cell cellType) Candidate(index int) bool {
 	}
 	var modifier uint16 = 0x8 << index
 	return cell.uint16&modifier != 0
+}
+
+func (cell cellType) Candidates() int {
+	res := 0
+	for i := 1; i <= 9; i++ {
+		var modifier uint16 = 0x8 << i
+		if cell.uint16&modifier != 0 {
+			res++
+		}
+	}
+	return res
 }
 
 func (cell *cellType) Enable(index int) bool {
