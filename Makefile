@@ -7,9 +7,13 @@ ZIP     = zip -r
 
 ifeq ($(UNAME), Windows_NT)
 PLATFORM= Windows
-TARGET= sudogo.exe
 else
 PLATFORM= $(shell go env GOOS | sed 's/^./\U&/')
+endif
+
+ifeq ($(PLATFORM), Windows)
+TARGET= sudogo.exe
+else
 TARGET= sudogo.x86_64
 endif
 
