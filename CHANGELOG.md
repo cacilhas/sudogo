@@ -2,6 +2,7 @@
 
 - 🎯 **Bugfix**: fix board vertical alignment.
 - 🏯 **Feature**: autofill.
+- 🏯 **Feature**: add solved board label.
 
 - Release 1.2, Mon Apr 11 18:00:43 2022 UTC
   - 🎯 **Bugfix**: fix extra lines on the board.

@@ -11,6 +11,11 @@ import (
 func TestBoard(t *testing.T) {
 	t.Run("NewBoard", func(t *testing.T) {
 		board := sudoku.NewBoard()
+		t.Run("GameOver", func(t *testing.T) {
+			if !board.GameOver() {
+				t.Fatal("expected game over, got not game over")
+			}
+		})
 		t.Run("String", func(t *testing.T) {
 			expected := `+---+---+---+
 |123|456|789|
@@ -77,6 +82,9 @@ func TestBoard(t *testing.T) {
 			}
 			if got := board.String(); got != input {
 				t.Fatalf("expected:\n%s\ngot:\n%s", input, got)
+			}
+			if board.GameOver() {
+				t.Fatal("expected not game over, got so")
 			}
 		})
 		t.Run("too small input", func(t *testing.T) {

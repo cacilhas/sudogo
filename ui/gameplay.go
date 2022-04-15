@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/cacilhas/sudogo/sudoku"
+	raygui "github.com/gen2brain/raylib-go/raygui"
 	raylib "github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -128,6 +129,17 @@ func drawGame(sx, sy, cellSize int32, game sudoku.Game) {
 				}
 			}
 		}
+	}
+
+	if game.GameOver() {
+		width := int64(windowWidth)
+		height := int64(windowHeight)
+		raygui.SetStyleColor(raygui.LabelTextColor, raylib.Maroon)
+		raygui.SetStyleProperty(raygui.GlobalTextFontsize, width/20)
+		raygui.Label(
+			raylib.Rectangle{X: 0, Y: 0, Width: float32(width), Height: float32(height)},
+			"Board Solved!!",
+		)
 	}
 }
 

@@ -2,6 +2,7 @@ package sudoku
 
 type Game interface {
 	Autofill()
+	GameOver() bool
 	Get(int, int) Cell
 	Set(int, int, int) bool
 	Toggle(int, int, int) bool
@@ -70,6 +71,10 @@ func (game *gameType) Autofill() {
 	if found {
 		game.current.Fix()
 	}
+}
+
+func (game gameType) GameOver() bool {
+	return game.current.GameOver()
 }
 
 func (game gameType) Get(x, y int) Cell {

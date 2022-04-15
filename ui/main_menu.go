@@ -30,17 +30,18 @@ func (menu *mainMenuType) Render() Scene {
 	width := float32(windowWidth)
 	height := float32(windowHeight)
 
-	titleWidth := height * 0.867
 	buttonWidth := width * 0.6
 	bigFontSize := int64(height / 7.5)
 	buttonFontSize := int64(height / 10)
 
+	raygui.SetStyleColor(raygui.LabelTextColor, raylib.DarkBlue)
+	raygui.SetStyleColor(raygui.ButtonDefaultTextColor, raylib.Black)
 	raygui.SetStyleProperty(raygui.GlobalTextFontsize, bigFontSize)
 	raygui.Label(
 		raylib.Rectangle{
-			X:      (width - titleWidth) / 2,
+			X:      0,
 			Y:      height / 30,
-			Width:  titleWidth,
+			Width:  width,
 			Height: float32(bigFontSize),
 		},
 		"Sudogo",
