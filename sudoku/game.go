@@ -69,7 +69,7 @@ func (game *gameType) Autofill() {
 		}
 	}
 	if found {
-		game.current.Fix()
+		game.current.partialFix()
 	}
 }
 
