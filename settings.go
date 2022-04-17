@@ -55,6 +55,9 @@ func defaultSettings() {
 	if !viper.IsSet("fullscreen") {
 		viper.Set("fullscreen", false)
 	}
+	if !viper.IsSet("3d_rendering") {
+		viper.Set("3d_rendering", false)
+	}
 	if !viper.IsSet("save_dir") {
 		viper.Set("save_dir", homedir)
 	}

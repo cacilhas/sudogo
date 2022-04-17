@@ -7,6 +7,7 @@ import (
 	"github.com/cacilhas/sudogo/sudoku"
 	raygui "github.com/gen2brain/raylib-go/raygui"
 	raylib "github.com/gen2brain/raylib-go/raylib"
+	"github.com/spf13/viper"
 )
 
 type gameplayType struct {
@@ -56,6 +57,16 @@ func (gameplay *gameplayType) Render() Scene {
 		return showHelp(gameplay).Init()
 	}
 
+	if viper.GetViper().GetBool("3d_rendering") {
+		return gameplay.render3D()
+	}
+	return gameplay.render2D()
+}
+
+//------------------------------------------------------------------------------
+// 2D rendering
+
+func (gameplay *gameplayType) render2D() Scene {
 	width := int32(windowWidth)
 	height := int32(windowHeight)
 	boardSize := int32(height/9) * 9
@@ -202,4 +213,12 @@ func saveCurrentBoard(data string) {
 		}
 	}()
 	fp.WriteString(data)
+}
+
+//------------------------------------------------------------------------------
+// 3D rendering
+
+func (gameplay *gameplayType) render3D() Scene {
+	// Not implemented
+	return gameplay
 }
