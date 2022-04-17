@@ -1,5 +1,7 @@
 # CHANGELOG
 
+- 🎯 **Bugfix**: autofill doesn’t reset candidates anymore.
+
 - Release 1.3, Fri Apr 15 15:53:32 2022 UTC
   - 🎯 **Bugfix**: fixed board vertical alignment.
   - 🏯 **Feature**: autofill.

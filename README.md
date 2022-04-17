@@ -3,11 +3,11 @@
 [copying]: https://raw.githubusercontent.com/cacilhas/sudogo/master/COPYING
 [email]: mailto:batalema@cacilhas.info
 [golang]: https://go.dev/
+[issues]: https://github.com/cacilhas/sudogo/issues
 [itch.io]: https://cacilhas.itch.io/sudogo
 [raygui]: https://github.com/raysan5/raygui
 [raylib]: https://www.raylib.com/
 [sudoku]: https://github.com/cacilhas/sudoku/
-[todo]: https://github.com/cacilhas/sudogo/blob/master/TODO.md
 
 # Sudogo
 
@@ -31,7 +31,7 @@ You can also install it from [Itch.io][itch.io].
 ## Info
 
 - [CHANGELOG][changelog]
-- [TODO list][todo]
+- [Issues][issues]
 
 ## Author
 
