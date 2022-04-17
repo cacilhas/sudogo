@@ -8,6 +8,7 @@ import (
 var helpMessage string = `HELP
 
 F1 :: Show this help
+F2 :: Toogle 3D rendering
 Control + F :: Toggle fullscreen
 Arrow keys / WASD / HJKL :: Move
 ESC :: Back to main menu / Exit
@@ -36,32 +37,32 @@ func (help *helpType) Render() Scene {
 	height := float32(windowHeight)
 
 	titleWidth := height * 0.867
-	textWidth := width * 0.8
+	textWidth := width * 0.75
 	bigFontSize := int64(height / 7.5)
 	textFontSize := bigFontSize / 3
 
-	y := height / 30
-	raygui.SetStyleProperty(raygui.GlobalTextFontsize, bigFontSize)
-	raygui.Label(
-		raylib.Rectangle{
-			X:      (width - titleWidth) / 2,
-			Y:      y,
-			Width:  titleWidth,
-			Height: float32(bigFontSize),
-		},
-		"Sudogo",
-	)
-
-	y += float32(bigFontSize) * 1.5
+	raygui.SetStyleColor(raygui.LabelTextColor, raylib.Black)
 	raygui.SetStyleProperty(raygui.GlobalTextFontsize, textFontSize)
 	raygui.Label(
 		raylib.Rectangle{
 			X:      (width - textWidth) / 2,
-			Y:      0,
+			Y:      -height / 5, // FIXME: why not zero?
 			Width:  textWidth,
-			Height: height - y,
+			Height: height,
 		},
 		helpMessage,
+	)
+
+	raygui.SetStyleColor(raygui.LabelTextColor, raylib.DarkBlue)
+	raygui.SetStyleProperty(raygui.GlobalTextFontsize, bigFontSize)
+	raygui.Label(
+		raylib.Rectangle{
+			X:      (width - titleWidth) / 2,
+			Y:      height / 30,
+			Width:  titleWidth,
+			Height: float32(bigFontSize),
+		},
+		"Sudogo",
 	)
 
 	return help
