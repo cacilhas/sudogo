@@ -92,14 +92,7 @@ func (gameplay *gameplayType) Render() Scene {
 // 2D rendering
 
 func (gameplay *gameplayType) render2D() Scene {
-	width := int32(windowWidth)
-	height := int32(windowHeight)
-	boardSize := int32(height/9) * 9
-	if width < boardSize {
-		boardSize = int32(width/9) * 9
-	}
-	xOffset := (width - boardSize) / 2
-	yOffset := (height - boardSize) / 2
+	xOffset, yOffset, boardSize := getOffset()
 	drawBoard2D(xOffset, yOffset, boardSize)
 	drawGame2D(xOffset, yOffset, boardSize/9, gameplay.Game)
 
@@ -181,6 +174,10 @@ func cellClicked2D(x, y, cellSize int32) {
 func (gameplay *gameplayType) render3D() Scene {
 	drawBoard3D()
 	drawGame3D(gameplay.Game)
+	xOffset, yOffset, boardSize := getOffset()
+	if !raylib.IsCursorHidden() && raylib.IsMouseButtonPressed(raylib.MouseLeftButton) {
+		cellClicked2D(xOffset, yOffset, boardSize/9)
+	}
 	player.render(0, 0, 1)
 	return gameplay
 }
@@ -307,4 +304,14 @@ func saveCurrentBoard(data string) {
 		}
 	}()
 	fp.WriteString(data)
+}
+
+func getOffset() (int32, int32, int32) {
+	width := int32(windowWidth)
+	height := int32(windowHeight)
+	boardSize := int32(height/9) * 9
+	if width < boardSize {
+		boardSize = int32(width/9) * 9
+	}
+	return (width - boardSize) / 2, (height - boardSize) / 2, boardSize
 }
