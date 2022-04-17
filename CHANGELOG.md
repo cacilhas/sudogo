@@ -1,7 +1,8 @@
 # CHANGELOG
 
-- 🎯 **Bugfix**: autofill doesn’t reset candidates anymore.
-- 🏯 **Feature**: added 3D rendereing.
+- Release 1.4, Sun Apr 17 03:32:07 2022 UTC
+  - 🎯 **Bugfix**: autofill doesn’t reset candidates anymore.
+  - 🏯 **Feature**: added 3D rendereing.
 
 - Release 1.3, Fri Apr 15 15:53:32 2022 UTC
   - 🎯 **Bugfix**: fixed board vertical alignment.
