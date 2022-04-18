@@ -3,8 +3,9 @@ module github.com/cacilhas/sudogo
 go 1.18
 
 require (
+	github.com/cacilhas/rayframe v0.1.3
 	github.com/gen2brain/raylib-go/raygui v0.0.0-20220324192015-efabb001d2f1
-	github.com/gen2brain/raylib-go/raylib v0.0.0-20220324192015-efabb001d2f1
+	github.com/gen2brain/raylib-go/raylib v0.0.0-20220416121506-32324342245a
 	github.com/spf13/viper v1.10.1
 	github.com/sqweek/dialog v0.0.0-20220227145630-7a1c9e333fcf
 )

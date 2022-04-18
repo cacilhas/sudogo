@@ -1,5 +1,7 @@
 github.com/TheTitanrain/w32 v0.0.0-20180517000239-4f5cfb03fabf h1:FPsprx82rdrX2jiKyS17BH6IrTmUBYqZa/CXT4uvb+I=
 github.com/TheTitanrain/w32 v0.0.0-20180517000239-4f5cfb03fabf/go.mod h1:peYoMncQljjNS6tZwI9WVyQB3qZS6u79/N3mBOcnd3I=
+github.com/cacilhas/rayframe v0.1.3 h1:1roVinvGOJskl0djAlb6wF3y7/vgDFQy4bGsWmQ9kYE=
+github.com/cacilhas/rayframe v0.1.3/go.mod h1:gAzB27hHxCvOTV/cUSsW9MoWQ6OfTtjqCn8sbBN1rWo=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
@@ -8,8 +10,8 @@ github.com/fsnotify/fsnotify v1.5.1/go.mod h1:T3375wBYaZdLLcVNkcVbzGHY7f1l/uK5T5
 github.com/gen2brain/raylib-go/raygui v0.0.0-20220324192015-efabb001d2f1 h1:+aHa+FGTaZVMfut/BAv8sIybkIO19fjFDJvLMQ43JNI=
 github.com/gen2brain/raylib-go/raygui v0.0.0-20220324192015-efabb001d2f1/go.mod h1:PdIDpFApFZazMjaf1mVuSgzTrMIdyC1e4vL98Euzgkw=
 github.com/gen2brain/raylib-go/raylib v0.0.0-20211111173445-914ca1ffdc4d/go.mod h1:+NbsqGlEQqGqrsgJFF5Yj2dkvn0ML2SQb8RqM2hJsPU=
-github.com/gen2brain/raylib-go/raylib v0.0.0-20220324192015-efabb001d2f1 h1:fVwOqFHoAMfdBytMHqiToHOwotB7/OX7ntEhyurnF3c=
-github.com/gen2brain/raylib-go/raylib v0.0.0-20220324192015-efabb001d2f1/go.mod h1:+NbsqGlEQqGqrsgJFF5Yj2dkvn0ML2SQb8RqM2hJsPU=
+github.com/gen2brain/raylib-go/raylib v0.0.0-20220416121506-32324342245a h1:vkTJFxoWRrQ3IJ8HcPASf1bxj7wHT49XHEhvduZO9Ec=
+github.com/gen2brain/raylib-go/raylib v0.0.0-20220416121506-32324342245a/go.mod h1:+NbsqGlEQqGqrsgJFF5Yj2dkvn0ML2SQb8RqM2hJsPU=
 github.com/hashicorp/hcl v1.0.0 h1:0Anlzjpi4vEasTeNFn2mLJgTSwt0+6sfsiTG8qcWGx4=
 github.com/hashicorp/hcl v1.0.0/go.mod h1:E5yfLk+7swimpb2L/Alb/PJmXilQ/rhwaUYs4T20WEQ=
 github.com/kr/fs v0.1.0/go.mod h1:FFnZGqtBN9Gxj7eW1uZ42v5BccTP0vu6NEaFoC2HwRg=
