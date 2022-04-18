@@ -1,5 +1,7 @@
 # CHANGELOG
 
+- 🎯 **Bugfix**: fixed fullscreen.
+
 - Release 1.5, Mon Apr 18 03:24::41 2022 UTC
   - 🎯 **Bugfix**: fixed resolution.
 
