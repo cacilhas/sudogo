@@ -2,6 +2,7 @@
 
 - Topic: show help on F1 during gameplay too.
 - Topic: show version on help.
+- 🎯 **Bugfix**: fixed Escape not exiting.
 
 - Release 1.6, Mon Apr 18 04:16:40 2022 UTC
   - 🎯 **Bugfix**: fixed fullscreen.
