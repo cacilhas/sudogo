@@ -1,7 +1,7 @@
 github.com/TheTitanrain/w32 v0.0.0-20180517000239-4f5cfb03fabf h1:FPsprx82rdrX2jiKyS17BH6IrTmUBYqZa/CXT4uvb+I=
 github.com/TheTitanrain/w32 v0.0.0-20180517000239-4f5cfb03fabf/go.mod h1:peYoMncQljjNS6tZwI9WVyQB3qZS6u79/N3mBOcnd3I=
-github.com/cacilhas/rayframe v1.0.1 h1:x3P/2J0utYl830InIPiyyNgWvUT0F1cq4Bk8lYzRJO4=
-github.com/cacilhas/rayframe v1.0.1/go.mod h1:gAzB27hHxCvOTV/cUSsW9MoWQ6OfTtjqCn8sbBN1rWo=
+github.com/cacilhas/rayframe v1.1.1 h1:BpV08azFTjuwu6Y0UPGL0xNJojhNYQQ1mdhJHMJVx/I=
+github.com/cacilhas/rayframe v1.1.1/go.mod h1:gAzB27hHxCvOTV/cUSsW9MoWQ6OfTtjqCn8sbBN1rWo=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=

@@ -29,7 +29,7 @@ func main() {
 	frame := &rayframe.RayFrame{
 		Camera:   &camera,
 		FPS:      24,
-		OnRezise: onResize,
+		OnResize: onResize,
 	}
 
 	frame.Init(
@@ -43,8 +43,8 @@ func main() {
 	frame.Mainloop(ui.MainMenu)
 }
 
-func onResize(width, height int) {
-	if !raylib.IsWindowFullscreen() {
+func onResize(width, height int, fullscreen bool) {
+	if !fullscreen {
 		viper.Set("width", width)
 		viper.Set("height", height)
 	}
