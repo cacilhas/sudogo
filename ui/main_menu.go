@@ -11,22 +11,29 @@ import (
 	raylib "github.com/gen2brain/raylib-go/raylib"
 )
 
+// Grant all required interfaces are implemented
+type MainMenuInterface interface {
+	rayframe.InitScene
+	rayframe.BackgroundScene
+	rayframe.UpdateScene
+	rayframe.RendererScene2D
+}
+
 type MainMenuType struct {
 	*rayframe.RayFrame
 }
 
-var MainMenu *MainMenuType = &MainMenuType{}
+var MainMenu MainMenuInterface = &MainMenuType{}
 
 func (menu *MainMenuType) Init(frame *rayframe.RayFrame) {
 	menu.RayFrame = frame
-	raylib.SetExitKey(raylib.KeyEscape)
 }
 
-func (menu *MainMenuType) Background() color.RGBA {
+func (menu MainMenuType) Background() color.RGBA {
 	return raylib.RayWhite
 }
 
-func (menu *MainMenuType) Update(dt time.Duration) interface{} {
+func (menu MainMenuType) Update(dt time.Duration) rayframe.Scene {
 	if raylib.IsKeyPressed(raylib.KeyF1) {
 		return showHelp(menu)
 	}
@@ -34,7 +41,7 @@ func (menu *MainMenuType) Update(dt time.Duration) interface{} {
 	return menu
 }
 
-func (menu *MainMenuType) Render2D() interface{} {
+func (menu MainMenuType) Render2D() rayframe.Scene {
 	width := float32(menu.WindowSize.X)
 	height := float32(menu.WindowSize.Y)
 
@@ -139,7 +146,7 @@ func (menu *MainMenuType) Render2D() interface{} {
 	return menu
 }
 
-func loadFromFile(scene interface{}) interface{} {
+func loadFromFile(scene rayframe.Scene) rayframe.Scene {
 	var fp *os.File
 	if aux, err := openFile(); err == nil {
 		fp = aux

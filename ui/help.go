@@ -19,33 +19,46 @@ ESC :: Back to main menu / Exit
 Numeric keys :: Toggle candidates
 Shift + Numeric keys :: Set cell value`
 
-type helpType struct {
-	*rayframe.RayFrame
-	previous interface{}
+// Grant all required interfaces are implemented
+type Help interface {
+	rayframe.InitScene
+	rayframe.ExitKeyScene
+	rayframe.BackgroundScene
+	rayframe.UpdateScene
+	rayframe.RendererScene2D
 }
 
-func showHelp(previous interface{}) interface{} {
+type helpType struct {
+	*rayframe.RayFrame
+	previous rayframe.Scene
+}
+
+func showHelp(previous rayframe.Scene) Help {
 	return &helpType{previous: previous}
 }
 
 func (help *helpType) Init(frame *rayframe.RayFrame) {
 	help.RayFrame = frame
-	raylib.SetExitKey(0)
 }
 
-func (help *helpType) Background() color.RGBA {
+func (help helpType) ExitKey() int32 {
+	return 0
+}
+
+func (help helpType) OnKeyEscape() rayframe.Scene {
+	return help.previous
+}
+
+func (help helpType) Background() color.RGBA {
 	return raylib.RayWhite
 }
 
-func (help *helpType) Update(dt time.Duration) interface{} {
-	if raylib.IsKeyPressed(raylib.KeyEscape) {
-		return help.previous
-	}
+func (help helpType) Update(dt time.Duration) rayframe.Scene {
 	update(dt)
 	return help
 }
 
-func (help *helpType) Render2D() interface{} {
+func (help helpType) Render2D() rayframe.Scene {
 	width := float32(help.WindowSize.X)
 	height := float32(help.WindowSize.Y)
 

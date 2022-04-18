@@ -12,13 +12,23 @@ import (
 	"github.com/spf13/viper"
 )
 
+// Grant all required interfaces are implemented
+type Gameplay interface {
+	rayframe.InitScene
+	rayframe.ExitKeyScene
+	rayframe.BackgroundScene
+	rayframe.UpdateScene
+	rayframe.RendererScene2D
+	rayframe.RendererScene3D
+}
+
 type gameplayType struct {
 	sudoku.Game
 	*rayframe.RayFrame
 	enable3D bool
 }
 
-var colours [10]color.RGBA = [10]color.RGBA{
+var colours = [10]color.RGBA{
 	raylib.Black,
 	raylib.Red,
 	raylib.Orange,
@@ -31,14 +41,14 @@ var colours [10]color.RGBA = [10]color.RGBA{
 	raylib.Gray,
 }
 
-func startGameplay(level sudoku.Level) interface{} {
+func startGameplay(level sudoku.Level) Gameplay {
 	player.x = 4
 	player.y = 4
 	game, _ := sudoku.NewGame(level)
 	return &gameplayType{game, nil, false}
 }
 
-func loadGameplay(input string) (interface{}, error) {
+func loadGameplay(input string) (Gameplay, error) {
 	player.x = 4
 	player.y = 4
 	if game, err := sudoku.NewGame(input); err == nil {
@@ -50,24 +60,28 @@ func loadGameplay(input string) (interface{}, error) {
 
 func (gameplay *gameplayType) Init(frame *rayframe.RayFrame) {
 	gameplay.RayFrame = frame
-	raylib.SetExitKey(0)
 }
 
-func (gameplay *gameplayType) Background() color.RGBA {
+func (gameplay gameplayType) ExitKey() int32 {
+	return 0
+}
+
+func (gameplay gameplayType) OnKeyEscape() rayframe.Scene {
+	return MainMenu
+}
+
+func (gameplay gameplayType) Background() color.RGBA {
 	return raylib.RayWhite
 }
 
-func (gameplay *gameplayType) Update(dt time.Duration) interface{} {
+func (gameplay *gameplayType) Update(dt time.Duration) rayframe.Scene {
+	if raylib.IsKeyPressed(raylib.KeyF1) {
+		return showHelp(gameplay)
+	}
 	gameplay.enable3D = viper.GetViper().GetBool("3d_rendering")
 	if raylib.IsKeyPressed(raylib.KeyF2) {
 		gameplay.enable3D = !gameplay.enable3D
 		viper.Set("3d_rendering", gameplay.enable3D)
-	}
-	if raylib.IsKeyPressed(raylib.KeyEscape) {
-		return MainMenu
-	}
-	if raylib.IsKeyPressed(raylib.KeyF1) {
-		return showHelp(gameplay)
 	}
 	update(dt)
 	player.move()
@@ -78,7 +92,7 @@ func (gameplay *gameplayType) Update(dt time.Duration) interface{} {
 //------------------------------------------------------------------------------
 // 2D rendering
 
-func (gameplay *gameplayType) Render2D() interface{} {
+func (gameplay *gameplayType) Render2D() rayframe.Scene {
 	if !gameplay.enable3D {
 		xOffset, yOffset, boardSize := gameplay.getOffset()
 		drawBoard2D(xOffset, yOffset, boardSize)
@@ -160,7 +174,7 @@ func cellClicked2D(x, y, cellSize int32) {
 //------------------------------------------------------------------------------
 // 3D rendering
 
-func (gameplay *gameplayType) Render3D() interface{} {
+func (gameplay *gameplayType) Render3D() rayframe.Scene {
 	if !gameplay.enable3D {
 		return gameplay
 	}

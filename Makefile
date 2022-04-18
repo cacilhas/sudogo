@@ -1,6 +1,7 @@
 INSTALL = install -s
 MD      = install -d
 RM      = rm -rf
+CLEAN   = go clean -r -cache
 TESTER  = go test -timeout 30s
 ZIP     = zip -r
 CC     ?= clang
@@ -66,6 +67,7 @@ $(PLATFORM)/$(TARGET): $(TARGET) $(PLATFORM)
 
 
 clean:
+	$(CLEAN)
 	$(RM) $(TARGET) $(PLATFORM) $(ZIPFILE)
 
 
