@@ -1,15 +1,17 @@
 package ui
 
 import (
+	"fmt"
 	"image/color"
 	"time"
 
 	"github.com/cacilhas/rayframe"
 	raygui "github.com/gen2brain/raylib-go/raygui"
 	raylib "github.com/gen2brain/raylib-go/raylib"
+	"github.com/spf13/viper"
 )
 
-var helpMessage string = `HELP
+var helpMessage string = `HELP [%s]
 
 F1 :: Show this help
 F2 :: Toogle 3D rendering
@@ -76,7 +78,7 @@ func (help helpType) Render2D() rayframe.Scene {
 			Width:  textWidth,
 			Height: height,
 		},
-		helpMessage,
+		fmt.Sprintf(helpMessage, viper.GetString("version")),
 	)
 
 	raygui.SetStyleColor(raygui.LabelTextColor, raylib.DarkBlue)
