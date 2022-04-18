@@ -17,10 +17,9 @@ type MainMenuType struct {
 
 var MainMenu *MainMenuType = &MainMenuType{}
 
-func (menu *MainMenuType) Init(frame *rayframe.RayFrame) interface{} {
+func (menu *MainMenuType) Init(frame *rayframe.RayFrame) {
 	menu.RayFrame = frame
 	raylib.SetExitKey(raylib.KeyEscape)
-	return menu
 }
 
 func (menu *MainMenuType) Background() color.RGBA {

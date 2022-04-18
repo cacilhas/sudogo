@@ -28,10 +28,9 @@ func showHelp(previous interface{}) interface{} {
 	return &helpType{previous: previous}
 }
 
-func (help *helpType) Init(frame *rayframe.RayFrame) interface{} {
+func (help *helpType) Init(frame *rayframe.RayFrame) {
 	help.RayFrame = frame
 	raylib.SetExitKey(0)
-	return help
 }
 
 func (help *helpType) Background() color.RGBA {

@@ -48,10 +48,9 @@ func loadGameplay(input string) (interface{}, error) {
 	}
 }
 
-func (gameplay *gameplayType) Init(frame *rayframe.RayFrame) interface{} {
+func (gameplay *gameplayType) Init(frame *rayframe.RayFrame) {
 	gameplay.RayFrame = frame
 	raylib.SetExitKey(0)
-	return gameplay
 }
 
 func (gameplay *gameplayType) Background() color.RGBA {
