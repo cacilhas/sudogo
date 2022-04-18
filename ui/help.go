@@ -1,6 +1,10 @@
 package ui
 
 import (
+	"image/color"
+	"time"
+
+	"github.com/cacilhas/rayframe"
 	raygui "github.com/gen2brain/raylib-go/raygui"
 	raylib "github.com/gen2brain/raylib-go/raylib"
 )
@@ -16,25 +20,35 @@ Numeric keys :: Toggle candidates
 Shift + Numeric keys :: Set cell value`
 
 type helpType struct {
-	previous Scene
+	*rayframe.RayFrame
+	previous interface{}
 }
 
-func showHelp(previous Scene) Scene {
+func showHelp(previous interface{}) interface{} {
 	return &helpType{previous: previous}
 }
 
-func (help *helpType) Init() Scene {
+func (help *helpType) Init(frame *rayframe.RayFrame) interface{} {
+	help.RayFrame = frame
 	raylib.SetExitKey(0)
 	return help
 }
 
-func (help *helpType) Render() Scene {
-	if raylib.IsKeyPressed(raylib.KeyEscape) {
-		return help.previous.Init()
-	}
+func (help *helpType) Background() color.RGBA {
+	return raylib.RayWhite
+}
 
-	width := float32(windowWidth)
-	height := float32(windowHeight)
+func (help *helpType) Update(dt time.Duration) interface{} {
+	if raylib.IsKeyPressed(raylib.KeyEscape) {
+		return help.previous
+	}
+	update(dt)
+	return help
+}
+
+func (help *helpType) Render2D() interface{} {
+	width := float32(help.WindowSize.X)
+	height := float32(help.WindowSize.Y)
 
 	titleWidth := height * 0.867
 	textWidth := width * 0.75

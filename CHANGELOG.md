@@ -1,5 +1,7 @@
 # CHANGELOG
 
+- 🎯 **Bugfix**: fixed resolution.
+
 - Release 1.4, Sun Apr 17 03:32:07 2022 UTC
   - 🎯 **Bugfix**: autofill doesn’t reset candidates anymore.
   - 🏯 **Feature**: added 3D rendereing.

@@ -1,34 +1,43 @@
 package ui
 
 import (
+	"image/color"
 	"os"
+	"time"
 
+	"github.com/cacilhas/rayframe"
 	"github.com/cacilhas/sudogo/sudoku"
 	raygui "github.com/gen2brain/raylib-go/raygui"
 	raylib "github.com/gen2brain/raylib-go/raylib"
 )
 
-var mainMenu Scene
-
-type mainMenuType struct {
+type MainMenuType struct {
+	*rayframe.RayFrame
 }
 
-func init() {
-	mainMenu = &mainMenuType{}
-}
+var MainMenu *MainMenuType = &MainMenuType{}
 
-func (menu *mainMenuType) Init() Scene {
+func (menu *MainMenuType) Init(frame *rayframe.RayFrame) interface{} {
+	menu.RayFrame = frame
 	raylib.SetExitKey(raylib.KeyEscape)
 	return menu
 }
 
-func (menu *mainMenuType) Render() Scene {
-	if raylib.IsKeyPressed(raylib.KeyF1) {
-		return showHelp(menu).Init()
-	}
+func (menu *MainMenuType) Background() color.RGBA {
+	return raylib.RayWhite
+}
 
-	width := float32(windowWidth)
-	height := float32(windowHeight)
+func (menu *MainMenuType) Update(dt time.Duration) interface{} {
+	if raylib.IsKeyPressed(raylib.KeyF1) {
+		return showHelp(menu)
+	}
+	update(dt)
+	return menu
+}
+
+func (menu *MainMenuType) Render2D() interface{} {
+	width := float32(menu.WindowSize.X)
+	height := float32(menu.WindowSize.Y)
 
 	buttonWidth := width * 0.6
 	bigFontSize := int64(height / 7.5)
@@ -60,7 +69,7 @@ func (menu *mainMenuType) Render() Scene {
 		},
 		"0. Very Easy",
 	) || raylib.IsKeyPressed(raylib.KeyZero) {
-		return startGameplay(sudoku.EXTREMELY_EASY).Init()
+		return startGameplay(sudoku.EXTREMELY_EASY)
 	}
 
 	btY += float32(buttonFontSize) * 1.25
@@ -73,7 +82,7 @@ func (menu *mainMenuType) Render() Scene {
 		},
 		"1. Easy",
 	) || raylib.IsKeyPressed(raylib.KeyOne) {
-		return startGameplay(sudoku.EASY).Init()
+		return startGameplay(sudoku.EASY)
 	}
 
 	btY += float32(buttonFontSize) * 1.25
@@ -86,7 +95,7 @@ func (menu *mainMenuType) Render() Scene {
 		},
 		"2. Medium",
 	) || raylib.IsKeyPressed(raylib.KeyTwo) {
-		return startGameplay(sudoku.MEDIUM).Init()
+		return startGameplay(sudoku.MEDIUM)
 	}
 
 	btY += float32(buttonFontSize) * 1.25
@@ -99,7 +108,7 @@ func (menu *mainMenuType) Render() Scene {
 		},
 		"3. Hard",
 	) || raylib.IsKeyPressed(raylib.KeyThree) {
-		return startGameplay(sudoku.HARD).Init()
+		return startGameplay(sudoku.HARD)
 	}
 
 	btY += float32(buttonFontSize) * 1.25
@@ -112,7 +121,7 @@ func (menu *mainMenuType) Render() Scene {
 		},
 		"4. Fiendish",
 	) || raylib.IsKeyPressed(raylib.KeyFour) {
-		return startGameplay(sudoku.FIENDISH).Init()
+		return startGameplay(sudoku.FIENDISH)
 	}
 
 	btY += float32(buttonFontSize) * 1.25
@@ -131,7 +140,7 @@ func (menu *mainMenuType) Render() Scene {
 	return menu
 }
 
-func loadFromFile(scene Scene) Scene {
+func loadFromFile(scene interface{}) interface{} {
 	var fp *os.File
 	if aux, err := openFile(); err == nil {
 		fp = aux

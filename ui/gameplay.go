@@ -3,7 +3,9 @@ package ui
 import (
 	"image/color"
 	"os"
+	"time"
 
+	"github.com/cacilhas/rayframe"
 	"github.com/cacilhas/sudogo/sudoku"
 	raygui "github.com/gen2brain/raylib-go/raygui"
 	raylib "github.com/gen2brain/raylib-go/raylib"
@@ -12,7 +14,8 @@ import (
 
 type gameplayType struct {
 	sudoku.Game
-	raylib.Camera
+	*rayframe.RayFrame
+	enable3D bool
 }
 
 var colours [10]color.RGBA = [10]color.RGBA{
@@ -28,79 +31,66 @@ var colours [10]color.RGBA = [10]color.RGBA{
 	raylib.Gray,
 }
 
-func createCamera() raylib.Camera {
-	return raylib.NewCamera3D(
-		raylib.NewVector3(0, 0, 10),
-		raylib.NewVector3(0, 0, 0),
-		raylib.NewVector3(0, 1, 0),
-		50.0,
-		raylib.CameraPerspective,
-	)
-}
-
-func startGameplay(level sudoku.Level) Scene {
+func startGameplay(level sudoku.Level) interface{} {
 	player.x = 4
 	player.y = 4
 	game, _ := sudoku.NewGame(level)
-	return &gameplayType{game, createCamera()}
+	return &gameplayType{game, nil, false}
 }
 
-func loadGameplay(input string) (Scene, error) {
+func loadGameplay(input string) (interface{}, error) {
 	player.x = 4
 	player.y = 4
 	if game, err := sudoku.NewGame(input); err == nil {
-		return &gameplayType{game, createCamera()}, nil
+		return &gameplayType{game, nil, false}, nil
 	} else {
 		return nil, err
 	}
 }
 
-func (gameplay *gameplayType) Init() Scene {
+func (gameplay *gameplayType) Init(frame *rayframe.RayFrame) interface{} {
+	gameplay.RayFrame = frame
 	raylib.SetExitKey(0)
 	return gameplay
 }
 
-func (gameplay *gameplayType) Render() Scene {
+func (gameplay *gameplayType) Background() color.RGBA {
+	return raylib.RayWhite
+}
+
+func (gameplay *gameplayType) Update(dt time.Duration) interface{} {
+	gameplay.enable3D = viper.GetViper().GetBool("3d_rendering")
+	if raylib.IsKeyPressed(raylib.KeyF2) {
+		gameplay.enable3D = !gameplay.enable3D
+		viper.Set("3d_rendering", gameplay.enable3D)
+	}
 	if raylib.IsKeyPressed(raylib.KeyEscape) {
-		return mainMenu.Init()
+		return MainMenu
 	}
 	if raylib.IsKeyPressed(raylib.KeyF1) {
-		return showHelp(gameplay).Init()
+		return showHelp(gameplay)
 	}
-
-	render3D := viper.GetViper().GetBool("3d_rendering")
-	if raylib.IsKeyPressed(raylib.KeyF2) {
-		render3D = !render3D
-		viper.Set("3d_rendering", render3D)
-	}
+	update(dt)
 	player.move()
 	play(gameplay.Game)
-
-	var res Scene
-	if render3D {
-		raylib.BeginMode3D(gameplay.Camera)
-		res = gameplay.render3D()
-		raylib.EndMode3D()
-	} else {
-		res = gameplay.render2D()
-	}
-	showGameOver(gameplay.Game)
-	return res
+	return gameplay
 }
 
 //------------------------------------------------------------------------------
 // 2D rendering
 
-func (gameplay *gameplayType) render2D() Scene {
-	xOffset, yOffset, boardSize := getOffset()
-	drawBoard2D(xOffset, yOffset, boardSize)
-	drawGame2D(xOffset, yOffset, boardSize/9, gameplay.Game)
+func (gameplay *gameplayType) Render2D() interface{} {
+	if !gameplay.enable3D {
+		xOffset, yOffset, boardSize := gameplay.getOffset()
+		drawBoard2D(xOffset, yOffset, boardSize)
+		drawGame2D(xOffset, yOffset, boardSize/9, gameplay.Game)
 
-	if !raylib.IsCursorHidden() && raylib.IsMouseButtonPressed(raylib.MouseLeftButton) {
-		cellClicked2D(xOffset, yOffset, boardSize/9)
+		if !raylib.IsCursorHidden() && raylib.IsMouseButtonPressed(raylib.MouseLeftButton) {
+			cellClicked2D(xOffset, yOffset, boardSize/9)
+		}
+		player.render(xOffset, yOffset, boardSize/9)
 	}
-	player.render(xOffset, yOffset, boardSize/9)
-
+	gameplay.showGameOver()
 	return gameplay
 }
 
@@ -171,10 +161,13 @@ func cellClicked2D(x, y, cellSize int32) {
 //------------------------------------------------------------------------------
 // 3D rendering
 
-func (gameplay *gameplayType) render3D() Scene {
+func (gameplay *gameplayType) Render3D() interface{} {
+	if !gameplay.enable3D {
+		return gameplay
+	}
 	drawBoard3D()
 	drawGame3D(gameplay.Game)
-	xOffset, yOffset, boardSize := getOffset()
+	xOffset, yOffset, boardSize := gameplay.getOffset()
 	if !raylib.IsCursorHidden() && raylib.IsMouseButtonPressed(raylib.MouseLeftButton) {
 		cellClicked2D(xOffset, yOffset, boardSize/9)
 	}
@@ -272,12 +265,12 @@ func play(game sudoku.Game) {
 	}
 }
 
-func showGameOver(game sudoku.Game) {
-	if game.GameOver() {
-		width := int64(windowWidth)
-		height := int64(windowHeight)
+func (gameplay *gameplayType) showGameOver() {
+	if gameplay.GameOver() {
+		width := gameplay.WindowSize.X
+		height := gameplay.WindowSize.Y
 		raygui.SetStyleColor(raygui.LabelTextColor, raylib.Maroon)
-		raygui.SetStyleProperty(raygui.GlobalTextFontsize, width/20)
+		raygui.SetStyleProperty(raygui.GlobalTextFontsize, int64(width)/20)
 		raygui.Label(
 			raylib.Rectangle{X: 0, Y: 0, Width: float32(width), Height: float32(height)},
 			"Board Solved!!",
@@ -306,9 +299,9 @@ func saveCurrentBoard(data string) {
 	fp.WriteString(data)
 }
 
-func getOffset() (int32, int32, int32) {
-	width := int32(windowWidth)
-	height := int32(windowHeight)
+func (gameplay *gameplayType) getOffset() (int32, int32, int32) {
+	width := int32(gameplay.WindowSize.X)
+	height := int32(gameplay.WindowSize.Y)
 	boardSize := int32(height/9) * 9
 	if width < boardSize {
 		boardSize = int32(width/9) * 9
